@@ -3,69 +3,99 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="viewport"
+          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
     <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
     <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
     <style>
-        label {
-            margin: 10px;
-            font-size: 24px;
+        header {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            background-color: ghostwhite;
         }
 
-        ul {
-            margin-bottom: 10px;
+        header h1 {
+            position: relative;
+            height: 50px;
+            line-height: 50px;
+            font-size: 20px;
+            color: magenta;
+            text-align: center;
         }
 
-        ul li {
-            margin: 5px 10px;
-            padding: 5px;
-            color: #000;
-            word-wrap: break-word;
+        header .left {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: deepskyblue;
+            text-align: center;
+        }
+
+        header .right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: deepskyblue;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <label>Hello APP</label>
-    <div id='sys-info'></div>
+    <header id="header">
+        <h1>每日优鲜</h1>
+        <div class="left" tapmode onclick="fnOpenCitySelectFrame();">选择城市
+            <div></div>
+            <div></div>
+        </div>
+        <div class="right" tapmode onclick="fnOpenPersonCenterWin();">个人中心</div>
+    </header>
+    <nav id="nav">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </nav>
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
-    apiready = function() {
-        var ver = api.version;
-        var sType = api.systemType;
-        var sVer = api.systemVersion;
-        var id = api.deviceId;
-        var model = api.deviceModel;
-        var name = api.deviceName;
-        var cType = api.connectionType;
-        var winName = api.winName;
-        var winWidth = api.winWidth;
-        var winHeight = api.winHeight;
-        var frameName = api.frameName || '';
-        var frameWidth = api.frameWidth || '';
-        var frameHeight = api.frameHeight || '';
-
-        var str = '<ul>';
-        str += '<li>引擎版本信息: ' + ver + '</li>';
-        str += '<li>系统类型: ' + sType + '</li>';
-        str += '<li>系统版本: ' + sVer + '</li>';
-        str += '<li>设备标识: ' + id + '</li>';
-        str += '<li>设备型号: ' + model + '</li>';
-        str += '<li>设备名称: ' + name + '</li>';
-        str += '<li>网络状态: ' + cType + '</li>';
-        str += '<li>主窗口名字: ' + winName + '</li>';
-        str += '<li>主窗口宽度: ' + winWidth + '</li>';
-        str += '<li>主窗口高度: ' + winHeight + '</li>';
-        str += '<li>子窗口名字: ' + frameName + '</li>';
-        str += '<li>子窗口宽度: ' + frameWidth + '</li>';
-        str += '<li>子窗口高度: ' + frameHeight + '</li>';
-        str += '</ul>';
-
-        $api.byId('sys-info').innerHTML = str;
-
+    apiready = function () {
     };
+
+    //打开城市选择Frame
+    function fnOpenCitySelectFrame() {
+        api.openFrame({
+            name: 'cityselect_frame',
+            url: './cityselect_frame.html',
+            bgColor: 'rgba(0,0,0,0.8)',
+            rect: {
+                x: 0,
+                y: 50,
+                w: 'auto', //自动填充所在window的宽度
+                h: 'auto' //自动填充所在window的高度
+            },
+            pageParam: {name: 'pageparam'},
+            bounces: true//打开弹动
+        });
+    }
+
+    function fnOpenPersonCenterWin() {
+        api.openWin({
+            name: 'login',
+            url: './login.html',
+        })
+    }
 </script>
 
 </html>
